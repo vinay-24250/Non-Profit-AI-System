@@ -14,7 +14,6 @@ services:
     restart: unless-stopped
 
   frontend:
-    frontend:
     image: 2201409/infra-frontend
     container_name: nonprofit_frontend
     ports:
