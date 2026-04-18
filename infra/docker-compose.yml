@@ -14,9 +14,8 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ../frontend
-      dockerfile: ../infra/Dockerfile.frontend
+    frontend:
+    image: 2201409/infra-frontend
     container_name: nonprofit_frontend
     ports:
       - "3000:80"

@@ -44,6 +44,8 @@ jobs:
 
             cd infra
 
+              sudo docker-compose pull
+              
             # Stop old containers (fix port issue)
             sudo docker-compose down || true
 
@@ -51,4 +53,4 @@ jobs:
             sudo docker container prune -f
 
             # Start fresh
-            sudo docker-compose up -d
+            sudo docker-compose up -d --build
