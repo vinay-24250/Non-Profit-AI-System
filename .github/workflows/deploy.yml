@@ -39,21 +39,18 @@ jobs:
           script: |
             cd /home/ubuntu/Non-Profit-AI-System
 
+            git reset --hard
             git pull origin main
 
-            # Create .env dynamically
             echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > backend/.env
 
             cd infra
 
-            # Pull latest images
-            sudo docker-compose pull
-
-            # Stop old containers (fix port issue)
             sudo docker-compose down || true
 
-            # Clean unused containers
+            sudo docker-compose pull
+
             sudo docker container prune -f
 
-            # Start fresh (NO BUILD)
+
             sudo docker-compose up -d
