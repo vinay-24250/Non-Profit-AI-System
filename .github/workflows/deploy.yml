@@ -33,12 +33,12 @@ jobs:
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.10
       with:
-        host: 15.207.184.18
-        username: ubuntu
-        key: ${{ secrets.EC2_KEY }}
-        script: |
-          sudo docker rm -f $(docker ps -aq) || true
-          sudo docker pull 2201409/infra-backend
-          sudo docker pull 2201409/infra-frontend
-          sudo docker run -d --restart unless-stopped -p 8000:8080 2201409/infra-backend
-          sudo docker run -d --restart unless-stopped -p 3000:80 2201409/infra-frontend
+         host: 15.207.184.18
+         username: ubuntu
+         key: ${{ secrets.EC2_KEY }}
+    script: |
+      sudo docker rm -f $(docker ps -aq) || true
+      sudo docker pull 2201409/infra-backend
+      sudo docker pull 2201409/infra-frontend
+      sudo docker run -d --restart unless-stopped -p 8000:8080 2201409/infra-backend
+      sudo docker run -d --restart unless-stopped -p 3000:80 2201409/infra-frontend
