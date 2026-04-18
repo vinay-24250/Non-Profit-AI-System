@@ -1,34 +1,44 @@
-- name: Deploy to EC2
-  uses: appleboy/ssh-action@v0.1.10
-  with:
-    host: 15.207.184.18
-    username: ubuntu
-    key: ${{ secrets.EC2_KEY }}
-    script: |
-      # Stop and remove specific containers (safe)
-      sudo docker stop backend || true
-      sudo docker stop frontend || true
+name: Deploy to EC2
 
-      sudo docker rm backend || true
-      sudo docker rm frontend || true
+on:
+  push:
+    branches:
+      - main
 
-      # Remove any container using ports (extra safety)
-      sudo fuser -k 8000/tcp || true
-      sudo fuser -k 3000/tcp || true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-      # Pull latest images
-      sudo docker pull 2201409/infra-backend
-      sudo docker pull 2201409/infra-frontend
+    steps:
 
-      # Run containers with fixed names
-      sudo docker run -d \
-        --name backend \
-        --restart unless-stopped \
-        -p 8000:8080 \
-        2201409/infra-backend
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      sudo docker run -d \
-        --name frontend \
-        --restart unless-stopped \
-        -p 3000:80 \
-        2201409/infra-frontend
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build & Push Backend
+      run: |
+        docker build -t 2201409/infra-backend ./backend -f infra/Dockerfile.backend
+        docker push 2201409/infra-backend
+
+    - name: Build & Push Frontend
+      run: |
+        docker build -t 2201409/infra-frontend ./frontend -f infra/Dockerfile.frontend
+        docker push 2201409/infra-frontend
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: 15.207.184.18
+        username: ubuntu
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+          sudo docker rm -f $(docker ps -aq) || true
+          sudo docker pull 2201409/infra-backend
+          sudo docker pull 2201409/infra-frontend
+          sudo docker run -d --restart unless-stopped -p 8000:8080 2201409/infra-backend
+          sudo docker run -d --restart unless-stopped -p 3000:80 2201409/infra-frontend
