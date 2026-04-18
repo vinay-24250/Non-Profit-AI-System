@@ -37,13 +37,13 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu/your-project-folder
+            cd /home/ubuntu/Non-Profit-AI-System
 
             # Stop old containers (fix port issue)
-            sudo docker compose down || true
+            sudo docker-compose down || true
 
             # Clean unused containers
             sudo docker container prune -f
 
             # Start fresh
-            sudo docker compose up -d --build
+            sudo docker-compose up -d --build
