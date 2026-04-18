@@ -37,7 +37,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu/Non-Profit-AI-System
+            cd /home/ubuntu/Non-Profit-AI-System/infra
 
             # Stop old containers (fix port issue)
             sudo docker-compose down || true
