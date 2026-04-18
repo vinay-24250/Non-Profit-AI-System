@@ -45,10 +45,6 @@ jobs:
            echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > backend/.env
 
            cd infra
-
-           sudo pkill -f docker-proxy || true
-
- 
            sudo docker stop $(docker ps -q) 2>/dev/null || true
            sudo docker rm $(docker ps -aq) 2>/dev/null || true
 
