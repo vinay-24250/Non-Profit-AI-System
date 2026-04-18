@@ -1,0 +1,14 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Secrets
+*.pem
+.env
+
+# Node
+node_modules/
+
+# Misc
+.DS_Store

@@ -1,0 +1,36 @@
+services:
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../infra/Dockerfile.backend
+    container_name: nonprofit_backend
+    env_file:
+      - ../backend/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - chroma_data:/app/chroma_db
+    networks:
+      - nonprofit_network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../infra/Dockerfile.frontend
+    container_name: nonprofit_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - nonprofit_network
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
+
+networks:
+  nonprofit_network:
+    driver: bridge

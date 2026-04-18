@@ -1,0 +1,30 @@
+- hosts: server
+  become: yes
+
+  tasks:
+    - name: Update packages
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull backend image
+      shell: docker pull 2201409/infra-backend
+
+    - name: Pull frontend image
+      shell: docker pull 2201409/infra-frontend
+
+    - name: Run backend container
+      shell: docker run -d -p 8000:8080 2201409/infra-backend
+
+    - name: Run frontend container
+      shell: docker run -d -p 3000:80 2201409/infra-frontend
