@@ -39,6 +39,8 @@ jobs:
           script: |
             cd /home/ubuntu/Non-Profit-AI-System
 
+            git pull origin main
+
             # Create .env dynamically
             echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > backend/.env
 

@@ -29,4 +29,3 @@ volumes:
 
 networks:
   nonprofit_network:
-    driver: bridge
