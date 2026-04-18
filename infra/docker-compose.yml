@@ -1,9 +1,7 @@
 services:
 
   backend:
-    build:
-      context: ../backend
-      dockerfile: ../infra/Dockerfile.backend
+    image: 2201409/infra-backend
     container_name: nonprofit_backend
     env_file:
       - ../backend/.env

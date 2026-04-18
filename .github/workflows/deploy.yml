@@ -51,4 +51,4 @@ jobs:
             sudo docker container prune -f
 
             # Start fresh
-            sudo docker-compose up -d --build
+            sudo docker-compose up -d
