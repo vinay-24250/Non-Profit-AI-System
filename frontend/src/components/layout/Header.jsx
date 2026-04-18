@@ -13,7 +13,7 @@ const Header = ({ activeTab, onTabChange }) => {
         border-b border-[#2a2a3e] bg-[#0a0a0f]/75 backdrop-blur-xl"
     >
       {/* Logo */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-5">
         <span className="font-['Syne'] text-lg font-black tracking-wider text-[#e8e8f0]">
           NONPROFIT <span className="text-teal-400">AI</span>
         </span>
