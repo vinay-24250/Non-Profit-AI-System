@@ -37,10 +37,12 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu/Non-Profit-AI-System/infra
+            cd /home/ubuntu/Non-Profit-AI-System
 
             # Create .env dynamically
             echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > backend/.env
+
+            cd infra
 
             # Stop old containers (fix port issue)
             sudo docker-compose down || true
