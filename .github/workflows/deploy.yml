@@ -45,8 +45,8 @@ jobs:
            echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > backend/.env
 
            cd infra
-            sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
-            sudo docker rm $(sudo docker ps -aq) 2>/dev/null || true
+           sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+           sudo docker rm $(sudo docker ps -aq) 2>/dev/null || true
   
            sudo docker-compose pull
 
