@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from "react";
 import Header from "./components/layout/Header";
 import TriagePanel from "./components/triage/TriagePanel";

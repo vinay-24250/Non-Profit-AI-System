@@ -20,15 +20,24 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set image tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA}" >> $GITHUB_ENV
+
       - name: Build & Push Backend
         run: |
-          docker build -t 2201409/infra-backend ./backend -f infra/Dockerfile.backend
-          docker push 2201409/infra-backend
+          docker build -t 2201409/infra-backend:latest \
+                 -t 2201409/infra-backend:${IMAGE_TAG} \
+                 ./backend -f infra/Dockerfile.backend
+          docker push 2201409/infra-backend:latest
+          docker push 2201409/infra-backend:${IMAGE_TAG}
 
       - name: Build & Push Frontend
         run: |
-          docker build -t 2201409/infra-frontend ./frontend -f infra/Dockerfile.frontend
-          docker push 2201409/infra-frontend
+          docker build -t 2201409/infra-frontend:latest \
+                 -t 2201409/infra-frontend:${IMAGE_TAG} \
+                 ./frontend -f infra/Dockerfile.frontend
+          docker push 2201409/infra-frontend:latest
+          docker push 2201409/infra-frontend:${IMAGE_TAG}
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.10
@@ -45,11 +54,6 @@ jobs:
            echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" > backend/.env
 
            cd infra
-           sudo docker stop $(docker ps -q) 2>/dev/null || true
-           sudo docker rm $(docker ps -aq) 2>/dev/null || true
-
-  
+           sudo docker-compose down
            sudo docker-compose pull
-
-
-           sudo docker-compose up -d
+           sudo docker-compose up -d --force-recreate

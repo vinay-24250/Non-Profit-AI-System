@@ -1,16 +1,16 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-baseURL: "http://15.207.184.18:8080",
+baseURL: "http://localhost:8080",
   headers: { "Content-Type": "application/json" },
   timeout: 30000,
 })
 
-// ── Triage Agent ─────────────────────────────────────────────────────────────
+// http://15.207.184.18:3000/
+
 export const runTriage = (text) =>
   apiClient.post("/api/triage", { text }).then((r) => r.data);
 
-// ── Quiz Bot ─────────────────────────────────────────────────────────────────
 export const generateQuestion = (topic, difficulty) =>
   apiClient.post("/api/quiz/generate", { topic, difficulty }).then((r) => r.data);
 

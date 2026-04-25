@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 
 const NAV_TABS = [
   { id: "triage", icon: "⚡", label: "Triage Agent" },
-  { id: "quiz",   icon: "🎓", label: "Quiz Bot"     },
+    { id: "quiz_bot", icon: "⚡", label: "Quiz Bot" },
+
+
 ];
 
 const Header = ({ activeTab, onTabChange }) => {
@@ -43,11 +45,6 @@ const Header = ({ activeTab, onTabChange }) => {
           </button>
         ))}
       </nav>
-
-      {/* Stack info */}
-      <div className="text-[0.65rem] font-mono text-[#6b6b88] hidden md:block">
-        Llama&nbsp;3.1 · Groq · FastAPI
-      </div>
     </header>
   );
 };

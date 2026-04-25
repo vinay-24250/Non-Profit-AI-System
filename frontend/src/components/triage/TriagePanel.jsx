@@ -1,4 +1,3 @@
-// src/components/triage/TriagePanel.jsx
 import { useState } from "react";
 import { runTriage } from "../../api/apiClient";
 import EmailInput from "./EmailInput";
@@ -30,7 +29,9 @@ const TriagePanel = () => {
       clearTimeout(t2);
       setResult(data);
     } catch (e) {
-      setError(e?.response?.data?.detail || "Connection error. Please try again.");
+      setError(
+        e?.response?.data?.detail || "Connection error. Please try again.",
+      );
     } finally {
       setLoading(false);
       setStep(0);
@@ -39,17 +40,15 @@ const TriagePanel = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 py-4">
-      {/* Header: Cleaner typography */}
       <header>
         <h2 className="text-2xl font-semibold text-white tracking-tight">
-          Email Triage Agent
+          Triage Agent
         </h2>
         <p className="text-gray-400 text-sm mt-1">
           Automated classification, entity extraction, and draft generation.
         </p>
       </header>
 
-      {/* Main Input Area: Less "boxy", more integrated */}
       <div className="space-y-4">
         <EmailInput
           value={text}
@@ -61,17 +60,14 @@ const TriagePanel = () => {
         <SampleEmails onSelect={setText} />
       </div>
 
-      {/* Error State */}
       {error && (
         <div className="p-4 bg-red-950/20 border border-red-900/50 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      {/* Results Section */}
       {result && (
         <div className="space-y-6 animate-in fade-in duration-500">
-          {/* Simple Step Breadcrumbs */}
           <div className="flex items-center gap-4 text-xs font-medium uppercase tracking-wider text-gray-500 border-b border-white/5 pb-4">
             {["Classified", "Extracted", "Drafted"].map((label, i) => (
               <div key={i} className="flex items-center gap-2">
@@ -81,13 +77,11 @@ const TriagePanel = () => {
             ))}
           </div>
 
-          {/* Grid: 1 col on mobile, 2 on desktop */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ClassificationCard classification={result.classification} />
             <EntityCard entities={result.entities} />
           </div>
 
-          {/* Draft area: Full width for readability */}
           <div className="pt-2">
             <DraftResponse draft={result.draft_response} />
           </div>

@@ -1,4 +1,3 @@
-# backend/triage_agent.py
 import os
 from dotenv import load_dotenv
 from crewai import Agent, Task, Crew, Process, LLM
@@ -7,8 +6,6 @@ from tools.json_parser_tool import parse_json_output
 
 load_dotenv()
 
-# ── LLM — pass as string with groq/ prefix ────────────────────────────────────
-# New CrewAI versions require LLM string or crewai.LLM object, not ChatGroq
 def get_llm(temperature: float = 0.2):
     return LLM(
         model="groq/llama-3.3-70b-versatile",

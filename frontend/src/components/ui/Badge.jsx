@@ -1,4 +1,3 @@
-// src/components/ui/Badge.jsx
 import PropTypes from "prop-types";
 
 const Badge = ({ children, variant = "default", className = "" }) => {

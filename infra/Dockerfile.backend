@@ -10,10 +10,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY backend/requirements.txt .
 
-# Install Python deps + CLEAN CACHE
-RUN pip install --no-cache-dir -r requirements.txt \
+# Install CPU-only torch FIRST
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir -r requirements.txt \
     && rm -rf /root/.cache/pip \
     && rm -rf /tmp/*
 
@@ -22,7 +23,7 @@ RUN python -m spacy download en_core_web_sm \
     && rm -rf /tmp/* \
     && rm -rf /root/.cache
 
-COPY . .
+COPY backend/ .
 
 # Remove build tools + CLEAN APT CACHE
 RUN apt-get purge -y gcc \

@@ -1,4 +1,3 @@
-// ── Urgency config ────────────────────────────────────────────────────────────
 export const URGENCY_CONFIG = {
   critical: { bg: "bg-red-500",    text: "text-white",  ring: "#EF4444", label: "CRITICAL" },
   high:     { bg: "bg-orange-500", text: "text-white",  ring: "#F97316", label: "HIGH"     },
@@ -6,7 +5,6 @@ export const URGENCY_CONFIG = {
   low:      { bg: "bg-emerald-500",text: "text-white",  ring: "#10B981", label: "LOW"      },
 };
 
-// ── Intent icon map ───────────────────────────────────────────────────────────
 export const INTENT_ICON = {
   donation_inquiry:  "💰",
   volunteer_request: "🤝",
@@ -16,7 +14,6 @@ export const INTENT_ICON = {
   media_inquiry:     "📰",
 };
 
-// ── Sample emails ─────────────────────────────────────────────────────────────
 export const SAMPLE_EMAILS = [
   {
     label: "Urgent Receipt",
@@ -35,7 +32,6 @@ export const SAMPLE_EMAILS = [
   },
 ];
 
-// ── Quiz topics ───────────────────────────────────────────────────────────────
 export const QUIZ_TOPICS = [
   "Responding to major donor emails",
   "Handling volunteer cancellations",
@@ -45,10 +41,8 @@ export const QUIZ_TOPICS = [
   "Escalating urgent donor complaints",
 ];
 
-// ── Difficulty options ────────────────────────────────────────────────────────
 export const DIFFICULTIES = ["easy", "medium", "hard"];
 
-// ── Triage step labels ────────────────────────────────────────────────────────
 export const TRIAGE_STEPS = [
   "Classifying intent…",
   "Extracting entities…",
