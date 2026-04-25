@@ -5,24 +5,33 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Install minimal build deps
+# Install minimal system deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy requirements first (better caching)
 COPY requirements.txt .
 
+# 🔥 Install CPU-only torch FIRST (VERY IMPORTANT)
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
+# Install remaining dependencies
 RUN pip install --no-cache-dir -r requirements.txt \
     && rm -rf /root/.cache/pip \
     && rm -rf /tmp/*
 
+# Download spaCy model
 RUN python -m spacy download en_core_web_sm \
     && rm -rf /tmp/* \
     && rm -rf /root/.cache
 
+# Copy app code
 COPY . .
 
-RUN apt-get purge -y gcc \
+# Remove build tools (reduce size)
+RUN apt-get purge -y gcc build-essential \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
