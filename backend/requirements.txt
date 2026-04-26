@@ -7,5 +7,3 @@ crewai-tools
 spacy
 litellm
 groq
-chromadb
-sentence-transformers
