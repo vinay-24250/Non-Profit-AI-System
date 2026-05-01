@@ -16,7 +16,7 @@ const EmailInput = ({ value, onChange, onSubmit, loading, step }) => {
         onChange={(e) => onChange(e.target.value)}
         placeholder="Dear team, I'm following up on my donation of $500 made on March 15th…"
         className="w-full bg-[#1a1a26] border border-[#2a2a3e] rounded-xl px-4 py-3.5
-          text-sm font-mono text-[#e8e8f0] placeholder-[#3a3a52] resize-y outline-none
+          text-sm font-mono text-[#e8e8f0] placeholder-[#05052a] resize-y outline-none
           focus:border-violet-500 transition-colors duration-200 leading-relaxed"
       />
 

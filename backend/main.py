@@ -1,4 +1,3 @@
-# backend/main.py
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -7,7 +6,6 @@ from pydantic import BaseModel
 
 load_dotenv()
 
-# ── Validate environment on startup ──────────────────────────────────────────
 _key = os.getenv("GROQ_API_KEY", "")
 if not _key or _key == "your_groq_api_key_here":
     raise RuntimeError(
@@ -16,18 +14,15 @@ if not _key or _key == "your_groq_api_key_here":
         "    2. Add your key from https://console.groq.com\n"
     )
 
-# Import crews AFTER env validation so they don't fail silently
-from triage_agent import run_triage_agent        # noqa: E402
-from quiz_engine import generate_question, evaluate_answer  # noqa: E402
+from triage_agent import run_triage_agent      
+from quiz_engine import generate_question, evaluate_answer  
 
-# ── App ───────────────────────────────────────────────────────────────────────
 app = FastAPI(
     title="NonProfit AI Platform",
     description="Triage Agent + Quiz Bot — powered by CrewAI + Llama 3.1 via Groq",
     version="2.0.0",
 )
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -42,8 +37,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# ── Pydantic Models ───────────────────────────────────────────────────────────
 class TriageRequest(BaseModel):
     text: str
 
@@ -58,7 +51,6 @@ class QuizEvaluateRequest(BaseModel):
     topic:          str
 
 
-# ── Health ────────────────────────────────────────────────────────────────────
 @app.get("/health")
 def health():
     return {
@@ -67,8 +59,6 @@ def health():
         "model": "llama-3.3-70b-versatile",
     }
 
-
-# ── Triage Agent ──────────────────────────────────────────────────────────────
 @app.post("/api/triage")
 def triage(req: TriageRequest):
     if not req.text.strip():
@@ -78,8 +68,6 @@ def triage(req: TriageRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-# ── Quiz: Generate ────────────────────────────────────────────────────────────
 @app.post("/api/quiz/generate")
 def quiz_generate(req: QuizGenerateRequest):
     if not req.topic.strip():
@@ -95,7 +83,6 @@ def quiz_generate(req: QuizGenerateRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ── Quiz: Evaluate ────────────────────────────────────────────────────────────
 @app.post("/api/quiz/evaluate")
 def quiz_evaluate(req: QuizEvaluateRequest):
     if not req.question.strip():
